@@ -1,0 +1,55 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+	step: string;
+	option: string;
+	isActive?: boolean;
+	price?: string;
+}
+
+const { title, description, step, option, isActive = false, price } = Astro.props;
+---
+
+<div class="option-card" data-step={step} data-option={option} class:list={[{ active: isActive }]}>
+	{isActive && (
+		<div class="checkmark absolute top-3 right-3">
+			<svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+				<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+			</svg>
+		</div>
+	)}
+	<h3 class="font-semibold text-black mb-1">{title}</h3>
+	{description && <p class="text-sm text-gray-600">{description}</p>}
+	{price && <p class="text-sm text-gray-600">{price}</p>}
+</div>
+
+<style>
+	.option-card {
+		position: relative;
+		border: 2px solid;
+		border-color: oklch(var(--bc) / 0.2);
+		border-radius: var(--radius-box, 1rem);
+		padding: 1.5rem;
+		text-align: center;
+		cursor: pointer;
+		transition: all 0.2s;
+		background-color: white;
+	}
+
+	.option-card:hover {
+		border-color: oklch(var(--p));
+		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+	}
+
+	.option-card.active {
+		border-color: oklch(var(--p));
+		background-color: #e0f2fe;
+	}
+
+	.checkmark {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+	}
+</style>

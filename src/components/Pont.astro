@@ -1,0 +1,88 @@
+---
+// Composant pour l'étape 5 : Largeur du pont
+---
+
+<div>
+	<h3 class="font-semibold text-black mb-2 text-lg">Largeur du pont</h3>
+	<p class="text-sm text-gray-600 mb-6">Pour un ajustement parfait sur votre nez</p>
+	
+	<div class="grid grid-cols-2 gap-4">
+		<!-- 14mm -->
+		<div class="pont-option" data-step="5" data-option="14mm">
+			<div class="pont-card">
+				<h4 class="text-xl font-bold text-black mb-1">14mm</h4>
+				<p class="text-sm text-gray-600">Nez étroit</p>
+			</div>
+		</div>
+
+		<!-- 16mm -->
+		<div class="pont-option selected" data-step="5" data-option="16mm">
+			<div class="pont-card">
+				<div class="check-icon-pont">
+					<svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+					</svg>
+				</div>
+				<h4 class="text-xl font-bold text-black mb-1">16mm</h4>
+				<p class="text-sm text-gray-600">Standard</p>
+			</div>
+		</div>
+
+		<!-- 18mm -->
+		<div class="pont-option" data-step="5" data-option="18mm">
+			<div class="pont-card">
+				<h4 class="text-xl font-bold text-black mb-1">18mm</h4>
+				<p class="text-sm text-gray-600">Confortable</p>
+			</div>
+		</div>
+
+		<!-- 20mm -->
+		<div class="pont-option" data-step="5" data-option="20mm">
+			<div class="pont-card">
+				<h4 class="text-xl font-bold text-black mb-1">20mm</h4>
+				<p class="text-sm text-gray-600">Nez large</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.pont-option {
+		cursor: pointer;
+		position: relative;
+	}
+
+	.pont-card {
+		background-color: white;
+		border: 2px solid #e5e7eb;
+		border-radius: 0.75rem;
+		padding: 1.5rem;
+		text-align: center;
+		transition: all 0.3s ease;
+		position: relative;
+	}
+
+	.pont-option:hover .pont-card {
+		border-color: oklch(var(--p) / 0.5);
+		transform: scale(1.02);
+	}
+
+	.pont-option.selected .pont-card {
+		border-color: oklch(var(--p));
+		background-color: #e0f2fe;
+		transform: scale(1.05);
+		box-shadow: 0 10px 25px -5px oklch(var(--p) / 0.3);
+	}
+
+	.check-icon-pont {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.pont-option.selected .check-icon-pont {
+		opacity: 1;
+	}
+</style>

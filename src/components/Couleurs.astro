@@ -1,0 +1,128 @@
+---
+// Composant pour l'étape 4 : Couleurs
+// Gère 2 sélections indépendantes : couleur monture et couleur branches
+---
+
+<div class="space-y-8">
+	<!-- Couleur de la monture -->
+	<div>
+		<h3 class="font-semibold text-black mb-2 text-lg">Couleur de la monture</h3>
+		<p class="text-sm text-gray-600 mb-4">Personnalisez la face avant avec une couleur unique</p>
+		
+		<div class="bg-white rounded-lg p-6 border border-gray-200">
+			<h4 class="text-sm font-semibold text-gray-700 mb-4">Choix des couleurs</h4>
+			<div class="grid grid-cols-6 gap-4">
+				<div class="color-option" data-step="4" data-category="monture" data-option="noir" data-color="#000000" title="Noir">
+					<div class="color-circle" style="background-color: #000000;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="marron" data-color="#8B4513" title="Marron">
+					<div class="color-circle" style="background-color: #8B4513;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="beige" data-color="#C3A58A" title="Beige">
+					<div class="color-circle" style="background-color: #C3A58A;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="gris" data-color="#E8E8E8" title="Gris clair">
+					<div class="color-circle" style="background-color: #E8E8E8; border: 1px solid #d1d5db;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="bleu-ciel" data-color="#49CCF8" title="Bleu ciel">
+					<div class="color-circle" style="background-color: #49CCF8;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="bordeaux" data-color="#6B1C23" title="Bordeaux">
+					<div class="color-circle" style="background-color: #6B1C23;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="vert" data-color="#10B981" title="Vert">
+					<div class="color-circle" style="background-color: #10B981;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="rose" data-color="#EC4899" title="Rose">
+					<div class="color-circle" style="background-color: #EC4899;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="orange" data-color="#F59E0B" title="Orange">
+					<div class="color-circle" style="background-color: #F59E0B;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="bleu-marine" data-color="#1E3A8A" title="Bleu marine">
+					<div class="color-circle" style="background-color: #1E3A8A;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="vert-fonce" data-color="#15803D" title="Vert foncé">
+					<div class="color-circle" style="background-color: #15803D;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="monture" data-option="violet" data-color="#7C3AED" title="Violet">
+					<div class="color-circle" style="background-color: #7C3AED;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Couleur des branches -->
+	<div>
+		<h3 class="font-semibold text-black mb-2 text-lg">Couleur des branches</h3>
+		<p class="text-sm text-gray-600 mb-4">Créez un contraste ou restez dans l'harmonie</p>
+		
+		<div class="bg-white rounded-lg p-6 border border-gray-200">
+			<h4 class="text-sm font-semibold text-gray-700 mb-4">Choix des couleurs</h4>
+			<div class="grid grid-cols-6 gap-4">
+				<div class="color-option" data-step="4" data-category="branches" data-option="noir" data-color="#000000" title="Noir">
+					<div class="color-circle" style="background-color: #000000;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="marron" data-color="#8B4513" title="Marron">
+					<div class="color-circle" style="background-color: #8B4513;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="beige" data-color="#C3A58A" title="Beige">
+					<div class="color-circle" style="background-color: #C3A58A;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="gris" data-color="#E8E8E8" title="Gris clair">
+					<div class="color-circle" style="background-color: #E8E8E8; border: 1px solid #d1d5db;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="bleu-ciel" data-color="#49CCF8" title="Bleu ciel">
+					<div class="color-circle" style="background-color: #49CCF8;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="bordeaux" data-color="#6B1C23" title="Bordeaux">
+					<div class="color-circle" style="background-color: #6B1C23;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="vert" data-color="#10B981" title="Vert">
+					<div class="color-circle" style="background-color: #10B981;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="rose" data-color="#EC4899" title="Rose">
+					<div class="color-circle" style="background-color: #EC4899;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="orange" data-color="#F59E0B" title="Orange">
+					<div class="color-circle" style="background-color: #F59E0B;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="bleu-marine" data-color="#1E3A8A" title="Bleu marine">
+					<div class="color-circle" style="background-color: #1E3A8A;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="vert-fonce" data-color="#15803D" title="Vert foncé">
+					<div class="color-circle" style="background-color: #15803D;"></div>
+				</div>
+				<div class="color-option" data-step="4" data-category="branches" data-option="violet" data-color="#7C3AED" title="Violet">
+					<div class="color-circle" style="background-color: #7C3AED;"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.color-option {
+		cursor: pointer;
+		transition: all 0.3s ease;
+		position: relative;
+	}
+
+	.color-circle {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	}
+
+	.color-option:hover .color-circle {
+		transform: scale(1.1);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	}
+
+	.color-option.selected .color-circle {
+		transform: scale(1.2);
+		box-shadow: 0 0 0 3px oklch(var(--p)), 0 6px 12px rgba(0, 0, 0, 0.3);
+	}
+</style>

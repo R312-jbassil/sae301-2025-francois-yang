@@ -1,0 +1,118 @@
+---
+// Composant pour l'étape 6 : Taille de la monture
+---
+
+<div>
+	<!-- Bloc de félicitations (Nudge) -->
+	<div class="bg-linear-to-r from-blue-50 to-cyan-50 border-2 border-blue-300 rounded-xl p-6 mb-8 flex items-start gap-4">
+		<div class="shrink-0">
+			<div class="w-12 h-12 bg-blue-400 rounded-full flex items-center justify-center">
+				<svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+				</svg>
+			</div>
+		</div>
+		<div class="flex-1">
+			<h3 class="font-bold text-black text-lg mb-2">Félicitations, votre modèle est unique !</h3>
+			<p class="text-gray-700 text-sm mb-3">Votre création exclusive est presque prête. Plus qu'une dernière étape pour finaliser votre chef-d'œuvre.</p>
+			<div class="flex flex-wrap gap-2">
+				<span class="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-medium text-gray-700 border border-gray-200">
+					<span>🎨</span> Design unique
+				</span>
+				<span class="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-medium text-gray-700 border border-gray-200">
+					<span>📏</span> Fait sur mesure
+				</span>
+				<span class="inline-flex items-center gap-1 px-3 py-1 bg-white rounded-full text-xs font-medium text-gray-700 border border-gray-200">
+					<span>🇫🇷</span> Atelier parisien
+				</span>
+			</div>
+		</div>
+	</div>
+
+	<!-- Options de taille -->
+	<h3 class="font-semibold text-black mb-2 text-lg">Taille de la monture</h3>
+	<p class="text-sm text-gray-600 mb-6">Pour un confort optimal</p>
+	
+	<div class="grid grid-cols-3 gap-4">
+		<!-- S -->
+		<div class="taille-option" data-step="6" data-option="S">
+			<div class="taille-card">
+				<h4 class="text-2xl font-bold text-black mb-1">S</h4>
+				<p class="text-sm text-gray-600">46-48mm</p>
+			</div>
+		</div>
+
+		<!-- M -->
+		<div class="taille-option selected" data-step="6" data-option="M">
+			<div class="taille-card">
+				<div class="check-icon-taille">
+					<svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+						<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+					</svg>
+				</div>
+				<h4 class="text-2xl font-bold text-black mb-1">M</h4>
+				<p class="text-sm text-gray-600">49-51mm</p>
+			</div>
+		</div>
+
+		<!-- L -->
+		<div class="taille-option" data-step="6" data-option="L">
+			<div class="taille-card">
+				<h4 class="text-2xl font-bold text-black mb-1">L</h4>
+				<p class="text-sm text-gray-600">52-54mm</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Offre de bienvenue -->
+	<div class="bg-amber-50 border-2 border-amber-200 rounded-xl p-4 mt-8 flex items-center gap-3">
+		<div class="shrink-0">
+			<span class="text-3xl">🎁</span>
+		</div>
+		<div>
+			<h4 class="font-bold text-black text-base mb-1">Offre de bienvenue :</h4>
+			<p class="text-gray-700 text-sm">Création de compte = <span class="font-semibold text-amber-700">-10% sur votre première commande</span></p>
+		</div>
+	</div>
+</div>
+
+<style>
+	.taille-option {
+		cursor: pointer;
+		position: relative;
+	}
+
+	.taille-card {
+		background-color: white;
+		border: 2px solid #e5e7eb;
+		border-radius: 0.75rem;
+		padding: 2rem 1.5rem;
+		text-align: center;
+		transition: all 0.3s ease;
+		position: relative;
+	}
+
+	.taille-option:hover .taille-card {
+		border-color: oklch(var(--p) / 0.5);
+		transform: scale(1.02);
+	}
+
+	.taille-option.selected .taille-card {
+		border-color: oklch(var(--p));
+		background-color: #e0f2fe;
+		transform: scale(1.05);
+		box-shadow: 0 10px 25px -5px oklch(var(--p) / 0.3);
+	}
+
+	.check-icon-taille {
+		position: absolute;
+		top: 0.75rem;
+		right: 0.75rem;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.taille-option.selected .check-icon-taille {
+		opacity: 1;
+	}
+</style>

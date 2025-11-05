@@ -1,0 +1,140 @@
+---
+import Layout from "../layouts/Layout.astro";
+import imageConnexion from "../assets/image-connexion.png";
+---
+
+<Layout title="TaVue - Connexion">
+    <div class="min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="w-full max-w-5xl">
+            <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+                <!-- Colonne gauche - Image -->
+                <div class="hidden lg:block">
+                    <div class="h-full rounded-lg overflow-hidden shadow-lg">
+                        <img
+                            src={imageConnexion.src}
+                            alt="Atelier TaVue - Élégance à la française"
+                            class="w-full h-full object-cover"
+                        />
+                    </div>
+                </div>
+
+                <!-- Colonne droite - Formulaire -->
+                <div class="flex items-center">
+                    <div class="bg-white rounded-lg shadow-lg p-8 w-full">
+                <!-- En-tête -->
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold text-gray-900 mb-3">
+                        Connexion
+                    </h1>
+                    <p class="text-gray-600">
+                        Bienvenue à TaVue
+                    </p>
+                </div>
+
+                <!-- Formulaire -->
+                <form class="space-y-5">
+                    <!-- Email -->
+                    <div class="form-control">
+                        <label class="label pb-1">
+                            <span class="label-text font-semibold text-gray-900">Email</span>
+                        </label>
+                        <input
+                            type="email"
+                            placeholder="vous@exemple.com"
+                            class="input w-full bg-white border-gray-300 placeholder:text-gray-400"
+                            required
+                        />
+                    </div>
+
+                    <!-- Mot de passe -->
+                    <div class="form-control">
+                        <label class="label pb-1">
+                            <span class="label-text font-semibold text-gray-900">Mot de passe</span>
+                        </label>
+                        <input
+                            type="password"
+                            placeholder="••••••••"
+                            class="input w-full bg-white border-gray-300 placeholder:text-gray-400"
+                            required
+                        />
+                    </div>
+
+                    <!-- Se souvenir de moi et Mot de passe oublié -->
+                    <div class="flex items-center justify-between text-sm pt-2">
+                        <label class="label cursor-pointer gap-2 p-0">
+                            <input
+                                type="checkbox"
+                                class="checkbox checkbox-sm"
+                            />
+                            <span class="label-text text-gray-700">Se souvenir de moi</span>
+                        </label>
+                        <a href="/mot-de-passe-oublie" class="text-cyan-500 hover:text-cyan-600">
+                            Mot de passe oublié?
+                        </a>
+                    </div>
+
+                    <!-- Bouton de connexion -->
+                    <div class="form-control pt-2">
+                        <button
+                            type="submit"
+                            class="btn bg-cyan-500 hover:bg-cyan-600 border-none w-full text-white"
+                        >
+                            Se connecter
+                        </button>
+                    </div>
+
+                    <!-- Séparateur -->
+                    <div class="divider text-sm text-gray-500 my-6">ou</div>
+
+                    <!-- Lien inscription -->
+                    <div class="text-center">
+                        <p class="text-gray-700">
+                            Pas encore de compte? 
+                            <a href="/inscription" class="text-cyan-500 hover:text-cyan-600 font-medium">
+                                Créer un compte
+                            </a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+                                <!-- Séparateur -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    // Gestion de la soumission du formulaire
+    const form = document.querySelector("form");
+
+    if (form) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = (
+                form.querySelector('input[type="email"]') as HTMLInputElement
+            )?.value;
+            const password = (
+                form.querySelector('input[type="password"]') as HTMLInputElement
+            )?.value;
+
+            // Ici, vous pouvez ajouter votre logique de connexion
+            // Par exemple, appel à une API PocketBase
+            console.log("Tentative de connexion avec:", { email, password });
+
+            // Exemple de redirection après connexion réussie
+            // window.location.href = '/personnaliser';
+
+            // Pour l'instant, affichage d'une alerte
+            alert("Connexion en cours...");
+        });
+    }
+</script>

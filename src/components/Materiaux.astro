@@ -1,0 +1,137 @@
+---
+// Composant pour l'étape 3 : Matériaux
+// Gère 2 sélections indépendantes : monture et branches
+---
+
+<div class="grid grid-cols-2 gap-12">
+	<!-- Colonne Monture -->
+	<div>
+		<h3 class="font-semibold text-black mb-6 text-lg">Monture</h3>
+		<div class="space-y-6">
+			<!-- Acétate -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="monture" data-option="acetate">
+				<div class="flex items-start gap-2 mb-1">
+					<h4 class="font-semibold text-black text-base">Acétate</h4>
+					<span class="badge badge-sm bg-green-100 text-green-700 border-green-200">🌿 Éco</span>
+				</div>
+				<p class="text-sm text-gray-600 mb-1">Léger et confortable</p>
+				<p class="text-xs text-green-600 mb-1">♻️ Recyclé à 97%</p>
+				<p class="text-sm text-primary font-medium">Inclus</p>
+			</div>
+
+			<!-- Métal -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="monture" data-option="metal">
+				<h4 class="font-semibold text-black text-base mb-1">Métal</h4>
+				<p class="text-sm text-gray-600 mb-1">Élégant et durable</p>
+				<p class="text-sm text-primary font-medium">+20€</p>
+			</div>
+
+			<!-- Titane -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="monture" data-option="titane">
+				<div class="flex items-start gap-2 mb-1">
+					<h4 class="font-semibold text-black text-base">Titane</h4>
+					<span class="badge badge-sm bg-amber-100 text-amber-700 border-amber-200">Série limitée</span>
+				</div>
+				<p class="text-sm text-gray-600 mb-1">Ultra-léger et résistant</p>
+				<p class="text-xs text-gray-500 mb-1">Plus que 20 unités disponibles</p>
+				<p class="text-sm text-primary font-medium">+60€</p>
+			</div>
+
+			<!-- Bois -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="monture" data-option="bois">
+				<div class="flex items-start gap-2 mb-1">
+					<h4 class="font-semibold text-black text-base">Bois</h4>
+					<span class="badge badge-sm bg-green-100 text-green-700 border-green-200">🌿 Éco</span>
+					<span class="badge badge-sm bg-amber-100 text-amber-700 border-amber-200">Série limitée</span>
+				</div>
+				<p class="text-sm text-gray-600 mb-1">Naturel et unique</p>
+				<p class="text-xs text-green-600 mb-1">♻️ Bois certifié FSC</p>
+				<p class="text-xs text-gray-500 mb-1">Plus que 15 unités disponibles</p>
+				<p class="text-sm text-primary font-medium">+40€</p>
+			</div>
+
+			<!-- Fibre de carbone -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="monture" data-option="carbone">
+				<h4 class="font-semibold text-black text-base mb-1">Fibre de carbone</h4>
+				<p class="text-sm text-gray-600 mb-1">Technique et moderne</p>
+				<p class="text-sm text-primary font-medium">+80€</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Colonne Branches -->
+	<div>
+		<h3 class="font-semibold text-black mb-6 text-lg">Branches</h3>
+		<div class="space-y-6">
+			<!-- Acétate -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="branches" data-option="acetate">
+				<div class="flex items-start gap-2 mb-1">
+					<h4 class="font-semibold text-black text-base">Acétate</h4>
+					<span class="badge badge-sm bg-green-100 text-green-700 border-green-200">🌿 Éco</span>
+				</div>
+				<p class="text-sm text-gray-600 mb-1">Léger et confortable</p>
+				<p class="text-xs text-green-600 mb-1">♻️ Recyclé à 97%</p>
+				<p class="text-sm text-primary font-medium">Inclus</p>
+			</div>
+
+			<!-- Métal -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="branches" data-option="metal">
+				<h4 class="font-semibold text-black text-base mb-1">Métal</h4>
+				<p class="text-sm text-gray-600 mb-1">Élégant et durable</p>
+				<p class="text-sm text-primary font-medium">+20€</p>
+			</div>
+
+			<!-- Titane -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="branches" data-option="titane">
+				<div class="flex items-start gap-2 mb-1">
+					<h4 class="font-semibold text-black text-base">Titane</h4>
+					<span class="badge badge-sm bg-amber-100 text-amber-700 border-amber-200">Série limitée</span>
+				</div>
+				<p class="text-sm text-gray-600 mb-1">Ultra-léger et résistant</p>
+				<p class="text-xs text-gray-500 mb-1">Plus que 20 unités disponibles</p>
+				<p class="text-sm text-primary font-medium">+60€</p>
+			</div>
+
+			<!-- Bois -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="branches" data-option="bois">
+				<div class="flex items-start gap-2 mb-1">
+					<h4 class="font-semibold text-black text-base">Bois</h4>
+					<span class="badge badge-sm bg-green-100 text-green-700 border-green-200">🌿 Éco</span>
+					<span class="badge badge-sm bg-amber-100 text-amber-700 border-amber-200">Série limitée</span>
+				</div>
+				<p class="text-sm text-gray-600 mb-1">Naturel et unique</p>
+				<p class="text-xs text-green-600 mb-1">♻️ Bois certifié FSC</p>
+				<p class="text-xs text-gray-500 mb-1">Plus que 15 unités disponibles</p>
+				<p class="text-sm text-primary font-medium">+40€</p>
+			</div>
+
+			<!-- Fibre de carbone -->
+			<div class="material-option cursor-pointer" data-step="3" data-category="branches" data-option="carbone">
+				<h4 class="font-semibold text-black text-base mb-1">Fibre de carbone</h4>
+				<p class="text-sm text-gray-600 mb-1">Technique et moderne</p>
+				<p class="text-sm text-primary font-medium">+80€</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	.material-option {
+		padding: 1rem;
+		border-radius: 0.5rem;
+		transition: all 0.3s ease;
+		border: 2px solid transparent;
+	}
+
+	.material-option:hover {
+		background-color: #f9fafb;
+		transform: scale(1.02);
+	}
+
+	.material-option.selected {
+		background-color: white;
+		border-color: oklch(var(--p));
+		transform: scale(1.05);
+		box-shadow: 0 10px 25px -5px oklch(var(--p) / 0.3), 0 8px 10px -6px oklch(var(--p) / 0.2);
+	}
+</style>
