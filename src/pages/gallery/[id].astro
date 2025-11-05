@@ -1,0 +1,273 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+// Récupérer l'ID depuis l'URL
+const { id } = Astro.params;
+
+// Récupérer les données de la lunette depuis PocketBase
+let lunette: any = null;
+let error = false;
+
+try {
+    const response = await fetch(`http://127.0.0.1:8090/api/collections/lunettes/records/${id}`);
+    if (response.ok) {
+        lunette = await response.json();
+    } else {
+        error = true;
+    }
+} catch (e) {
+    console.error('Erreur lors de la récupération de la lunette:', e);
+    error = true;
+}
+
+// Si erreur ou pas de lunette, rediriger vers la collection
+if (error || !lunette) {
+    return Astro.redirect('/gallery/collection');
+}
+
+// Formater la date de création
+const dateCreation = new Date(lunette.created).toLocaleDateString('fr-FR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+});
+---
+
+<Layout title={`TaVue - ${lunette.nom_creation || 'Ma création'}`}>
+    <div class="min-h-screen bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Retour à la collection -->
+            <a 
+                href="/gallery/collection" 
+                class="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6 transition-colors"
+            >
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                </svg>
+                Retour à ma collection
+            </a>
+
+            <!-- Contenu principal -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Colonne gauche : Images -->
+                <div class="space-y-4">
+                    <!-- Image principale -->
+                    <div class="bg-white rounded-xl shadow-sm p-8 lg:p-12">
+                        <div class="bg-gray-50 rounded-lg p-8 flex items-center justify-center min-h-[400px]">
+                            {lunette.code_svg ? (
+                                <div class="w-full h-auto max-w-md" set:html={lunette.code_svg}></div>
+                            ) : (
+                                <img src="/lunettes.svg" alt="Lunettes personnalisées" class="w-full h-auto max-w-md" />
+                            )}
+                        </div>
+                    </div>
+
+                    <!-- Vues supplémentaires (gauche/droite) -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white rounded-xl shadow-sm p-4">
+                            <div class="bg-gray-50 rounded-lg p-6 flex items-center justify-center min-h-[150px]">
+                                <img src="/lunettes-vue-droite.svg" alt="Côté droit" class="w-full h-auto" />
+                            </div>
+                            <p class="text-center text-sm text-gray-600 mt-2">Côté droit</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm p-4">
+                            <div class="bg-gray-50 rounded-lg p-6 flex items-center justify-center min-h-[150px]">
+                                <img src="/lunettes-vue-gauche.svg" alt="Côté gauche" class="w-full h-auto" />
+                            </div>
+                            <p class="text-center text-sm text-gray-600 mt-2">Côté gauche</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Colonne droite : Informations -->
+                <div class="space-y-6">
+                    <!-- Badge et titre -->
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-amber-100 text-amber-800 text-xs font-medium rounded-full mb-3">
+                            Collection 2025
+                        </span>
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                            {lunette.nom_creation || lunette.forme || 'Configuration Aviateur'}
+                        </h1>
+                        <p class="text-gray-600 mb-1">
+                            {lunette.mode_creation === 'ia' ? 'Modèle généré par IA' : 'Modèle personnalisé'}
+                        </p>
+                        <p class="text-sm text-gray-500">
+                            {lunette.forme ? `Monture iconique inspirée des pilotes des années 30. Un classique intemporel qui allie fonctionnalité et élégance.` : 'Une création unique qui reflète votre style.'}
+                        </p>
+                    </div>
+
+                    <!-- Vos spécifications -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4">Vos spécifications</h2>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-600">Monture</span>
+                                <span class="text-gray-900 font-medium">{lunette.forme || 'Non spécifié'}</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-600">Type de verres</span>
+                                <span class="text-gray-900 font-medium">{lunette.type_verre || 'Non spécifié'}</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-600">Matériau monture</span>
+                                <span class="text-gray-900 font-medium">{lunette.type_monture || 'Non spécifié'}</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-600">Matériau branches</span>
+                                <span class="text-gray-900 font-medium">{lunette.materiau_branches || 'Non spécifié'}</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-600">Couleur monture</span>
+                                <div class="flex items-center gap-2">
+                                    {lunette.couleur_monture && (
+                                        <>
+                                            <div class="w-6 h-6 rounded-full border-2 border-gray-300" style={`background-color: ${lunette.couleur_monture}`}></div>
+                                            <span class="text-gray-900 font-medium">{lunette.couleur_monture}</span>
+                                        </>
+                                    )}
+                                    {!lunette.couleur_monture && (
+                                        <span class="text-gray-900 font-medium">Non spécifié</span>
+                                    )}
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-600">Couleur branches</span>
+                                <div class="flex items-center gap-2">
+                                    {lunette.couleur_branches && (
+                                        <>
+                                            <div class="w-6 h-6 rounded-full border-2 border-gray-300" style={`background-color: ${lunette.couleur_branches}`}></div>
+                                            <span class="text-gray-900 font-medium">{lunette.couleur_branches}</span>
+                                        </>
+                                    )}
+                                    {!lunette.couleur_branches && (
+                                        <span class="text-gray-900 font-medium">Non spécifié</span>
+                                    )}
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-gray-100">
+                                <span class="text-gray-600">Largeur pont</span>
+                                <span class="text-gray-900 font-medium">{lunette.largeur_pont ? `${lunette.largeur_pont}mm` : 'Non spécifié'}</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span class="text-gray-600">Taille</span>
+                                <span class="text-gray-900 font-medium">{lunette.taille || 'MEDIUM'}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Caractéristiques -->
+                    <div class="bg-white rounded-xl shadow-sm p-6">
+                        <h2 class="text-lg font-semibold text-gray-900 mb-4">Caractéristiques</h2>
+                        <div class="space-y-3">
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-amber-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Double pont</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-amber-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Finition métal premium</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <svg class="w-5 h-5 text-amber-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                </svg>
+                                <span class="text-gray-700">Branches flexibles</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Garantie et livraison -->
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+                            <svg class="w-8 h-8 text-cyan-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="text-sm font-medium text-gray-900">Garantie 2 ans</p>
+                        </div>
+                        <div class="bg-white rounded-xl shadow-sm p-6 text-center">
+                            <svg class="w-8 h-8 text-cyan-400 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                            <p class="text-sm font-medium text-gray-900">Livraison offerte</p>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="space-y-3">
+                        <a
+                            href={`/personnaliser?id=${lunette.id}`}
+                            class="block w-full px-6 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 text-center font-medium rounded-lg transition-colors"
+                        >
+                            Modifier
+                        </a>
+                        <button
+                            class="w-full px-6 py-3 bg-cyan-400 hover:bg-cyan-500 text-white font-medium rounded-lg transition-colors"
+                        >
+                            Commander
+                        </button>
+                    </div>
+
+                    <!-- Informations supplémentaires -->
+                    <div class="bg-gray-100 rounded-lg p-4">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <span class="text-sm font-medium text-gray-700">Informations</span>
+                        </div>
+                        <div class="space-y-1 text-sm text-gray-600">
+                            <p>• Créée le {dateCreation}</p>
+                            <p>• ID: {lunette.id}</p>
+                            {lunette.mode_creation && (
+                                <p>• Mode de création: {lunette.mode_creation === 'ia' ? 'Intelligence Artificielle' : 'Personnalisation manuelle'}</p>
+                            )}
+                        </div>
+                    </div>
+
+                    <!-- Actions supplémentaires -->
+                    <div class="flex gap-3">
+                        <button
+                            class="flex-1 px-4 py-2 border border-gray-300 hover:border-gray-400 text-gray-700 font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                            title="Ajouter aux favoris"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                            </svg>
+                        </button>
+                        <button
+                            class="flex-1 px-4 py-2 border border-gray-300 hover:border-gray-400 text-gray-700 font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+                            title="Partager"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    /* Animation pour les images SVG */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .bg-white {
+        animation: fadeIn 0.3s ease-out;
+    }
+</style>

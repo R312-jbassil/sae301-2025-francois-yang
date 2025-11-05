@@ -29,8 +29,21 @@
       </div>
 
      
-      <div class="flex items-center">
+      <div class="flex items-center gap-4">
+        <!-- Bouton utilisateur (visible si connecté) -->
+        <div id="user-menu" class="hidden items-center gap-2">
+          <span id="user-name" class="text-sm text-gray-700 hidden md:block"></span>
+          <button 
+            id="logout-btn"
+            class="px-4 py-2 text-sm font-medium text-white bg-red-500 hover:bg-red-600 rounded-lg transition-colors"
+          >
+            Se déconnecter
+          </button>
+        </div>
+
+        <!-- Bouton connexion (visible si non connecté) -->
         <a 
+          id="login-link"
           href="/connexion" 
           class="text-gray-700 hover:text-gray-900 transition-colors duration-200"
           aria-label="Connexion utilisateur"
@@ -92,6 +105,13 @@
         >
           Ma Collection
         </a>
+        <!-- Bouton déconnexion mobile (visible si connecté) -->
+        <button 
+          id="logout-btn-mobile"
+          class="hidden w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:text-red-700 hover:bg-red-50"
+        >
+          Se déconnecter
+        </button>
       </div>
     </div>
   </nav>
@@ -107,4 +127,66 @@
       mobileMenu.classList.toggle('hidden');
     });
   }
+
+  // Gestion de l'authentification
+  function checkAuth() {
+    const authData = localStorage.getItem('pocketbase_auth');
+    const userMenu = document.getElementById('user-menu');
+    const loginLink = document.getElementById('login-link');
+    const userName = document.getElementById('user-name');
+    const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+
+    if (authData) {
+      try {
+        const auth = JSON.parse(authData);
+        
+        // Afficher le menu utilisateur
+        if (userMenu) {
+          userMenu.classList.remove('hidden');
+          userMenu.classList.add('flex');
+        }
+        
+        // Cacher le lien de connexion
+        if (loginLink) {
+          loginLink.classList.add('hidden');
+        }
+
+        // Afficher le bouton déconnexion mobile
+        if (logoutBtnMobile) {
+          logoutBtnMobile.classList.remove('hidden');
+        }
+        
+        // Afficher le nom de l'utilisateur
+        if (userName && auth.record?.name) {
+          userName.textContent = auth.record.name;
+        }
+      } catch (e) {
+        console.error('Erreur lors de la lecture des données d\'authentification:', e);
+      }
+    }
+  }
+
+  // Fonction de déconnexion
+  function logout() {
+    // Supprimer de localStorage
+    localStorage.removeItem('pocketbase_auth');
+    
+    // Rediriger vers la page de connexion
+    window.location.href = '/connexion';
+  }
+
+  // Écouteurs d'événements pour les boutons de déconnexion
+  const logoutBtn = document.getElementById('logout-btn');
+  const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', logout);
+  }
+
+  if (logoutBtnMobile) {
+    logoutBtnMobile.addEventListener('click', logout);
+  }
+
+  // Vérifier l'authentification au chargement
+  checkAuth();
 </script>

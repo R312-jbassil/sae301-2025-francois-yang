@@ -345,7 +345,7 @@ function updateStep(newStep) {
 
 	if (progressBar) {
 		const progress = (currentStep / totalSteps) * 100;
-		progressBar.value = progress;
+		progressBar.style.width = progress + '%';
 	}
 
 	if (remainingSteps) {

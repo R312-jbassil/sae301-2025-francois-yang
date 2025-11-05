@@ -41,7 +41,7 @@ import imageConnexion from "../assets/image-connexion.png";
                         <input
                             type="email"
                             placeholder="vous@exemple.com"
-                            class="input w-full bg-white border-gray-300 placeholder:text-gray-400"
+                            class="input w-full bg-white border-gray-300 placeholder:text-gray-400 text-black"
                             required
                         />
                     </div>
@@ -54,7 +54,7 @@ import imageConnexion from "../assets/image-connexion.png";
                         <input
                             type="password"
                             placeholder="••••••••"
-                            class="input w-full bg-white border-gray-300 placeholder:text-gray-400"
+                            class="input w-full bg-white border-gray-300 placeholder:text-gray-400 text-black"
                             required
                         />
                     </div>
@@ -126,15 +126,38 @@ import imageConnexion from "../assets/image-connexion.png";
                 form.querySelector('input[type="password"]') as HTMLInputElement
             )?.value;
 
-            // Ici, vous pouvez ajouter votre logique de connexion
-            // Par exemple, appel à une API PocketBase
-            console.log("Tentative de connexion avec:", { email, password });
+            try {
+                console.log("🔄 Tentative de connexion...");
+                
+                // Appel à l'API de connexion
+                const response = await fetch("/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
 
-            // Exemple de redirection après connexion réussie
-            // window.location.href = '/personnaliser';
+                const data = await response.json();
 
-            // Pour l'instant, affichage d'une alerte
-            alert("Connexion en cours...");
+                if (response.ok && data.user) {
+                    console.log("✅ Connexion réussie!");
+                    
+                    // Stocker dans localStorage pour le Header
+                    localStorage.setItem('pocketbase_auth', JSON.stringify({
+                        record: data.user
+                    }));
+                    
+                    // Redirection vers la page de personnalisation
+                    window.location.href = "/personnaliser";
+                } else {
+                    console.error("❌ Erreur:", data.error);
+                    alert(data.error || "Email ou mot de passe incorrect");
+                }
+            } catch (error) {
+                console.error("❌ Erreur de connexion:", error);
+                alert("Erreur de connexion. Vérifiez que PocketBase est démarré.");
+            }
         });
     }
 </script>

@@ -35,8 +35,8 @@ if (editId) {
 			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-4">
-						<div class="w-12 h-12 bg-primary/10 flex items-center justify-center" style="border-radius: var(--radius-box, 1rem);">
-							<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<div class="w-12 h-12 bg-cyan-400/10 flex items-center justify-center" style="border-radius: var(--radius-box, 1rem);">
+							<svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
 							</svg>
 						</div>
@@ -49,7 +49,7 @@ if (editId) {
 					</div>
 					<div class="flex items-center gap-3">
 						<!-- Bouton Générateur IA -->
-						<a href="/generator" class="btn btn-outline btn-primary gap-2">
+						<a href="/generator" class="px-4 py-2 border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-white rounded-lg font-medium transition-colors flex items-center gap-2">
 							<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
 							</svg>
@@ -128,12 +128,10 @@ if (editId) {
 						<h2 class="text-lg font-semibold text-black">Étape <span id="current-step">1</span> sur 6</h2>
 						<p class="text-sm text-gray-600">Plus que <span id="remaining-steps">5</span> étapes avant de créer votre lunette !</p>
 					</div>
-					<div class="text-right">
-						<span class="text-2xl font-bold text-black">149</span>
-						<span class="text-sm text-gray-500">€</span>
-					</div>
 				</div>
-				<progress class="progress progress-primary w-full h-2" value="16.66" max="100" id="progress-bar"></progress>
+				<div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+					<div class="bg-cyan-400 h-2 rounded-full transition-all duration-300" style="width: 16.66%" id="progress-bar"></div>
+				</div>
 			</div>
 		</div>
 
@@ -239,7 +237,7 @@ if (editId) {
 						</div>
 
 						<!-- Prix total -->
-						<div class="mt-6 bg-primary/10 p-4 flex justify-between items-center" style="border-radius: var(--radius-box, 1rem);">
+						<div class="mt-6 bg-cyan-400/10 p-4 flex justify-between items-center" style="border-radius: var(--radius-box, 1rem);">
 							<span class="font-semibold text-black">Prix total</span>
 							<span id="prix-total" class="text-2xl font-bold text-black">149€</span>
 						</div>
@@ -256,7 +254,7 @@ if (editId) {
 						<div class="grid grid-cols-2 gap-4">
 							<div class="option-card active" data-step="1" data-option="aviateur">
 								<div class="checkmark">
-									<svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 20 20">
+									<svg class="w-6 h-6 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
 										<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
 									</svg>
 								</div>
@@ -290,7 +288,7 @@ if (editId) {
 							<div class="option-card" data-step="2" data-option="verres-clairs">
 								<div class="flex justify-between items-center">
 									<div>
-										<h3 class="font-semibold text-black mb-1">Verres Clairs - <span class="text-primary">inclus</span></h3>
+										<h3 class="font-semibold text-black mb-1">Verres Clairs - <span class="text-cyan-400">inclus</span></h3>
 									</div>
 								</div>
 							</div>
@@ -349,13 +347,13 @@ if (editId) {
 
 					<!-- Boutons de navigation -->
 					<div class="flex gap-4 mt-8">
-						<button id="btn-precedent" class="btn btn-outline flex-1 hidden text-white bg-black">
+						<button id="btn-precedent" class="px-6 py-3 border-2 border-black text-black hover:bg-black hover:text-white rounded-lg font-medium transition-colors flex-1 hidden">
 							Précédent
 						</button>
-						<button id="btn-suivant" class="btn btn-primary flex-1 text-white">
+						<button id="btn-suivant" class="px-6 py-3 bg-cyan-400 hover:bg-cyan-500 text-white rounded-lg font-medium transition-colors flex-1">
 							Suivant
 						</button>
-						<button id="btn-commander" class="btn btn-primary flex-1 text-white hidden">
+						<button id="btn-commander" class="px-6 py-3 bg-cyan-400 hover:bg-cyan-500 text-white rounded-lg font-medium transition-colors flex-1 hidden">
 							Commander
 						</button>
 					</div>
@@ -370,7 +368,7 @@ if (editId) {
 	.option-card {
 		position: relative;
 		border: 2px solid;
-		border-color: oklch(var(--bc) / 0.2);
+		border-color: #e5e7eb;
 		border-radius: var(--radius-box, 1rem);
 		padding: 1.5rem;
 		text-align: center;
@@ -380,16 +378,16 @@ if (editId) {
 	}
 
 	.option-card:hover {
-		border-color: oklch(var(--p) / 0.5);
+		border-color: #22d3ee;
 		box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
 		transform: scale(1.02);
 	}
 
 	.option-card.active {
-		border-color: oklch(var(--p));
+		border-color: #22d3ee;
 		background-color: white;
 		transform: scale(1.05);
-		box-shadow: 0 10px 25px -5px oklch(var(--p) / 0.3), 0 8px 10px -6px oklch(var(--p) / 0.2);
+		box-shadow: 0 10px 25px -5px rgba(34, 211, 238, 0.3), 0 8px 10px -6px rgba(34, 211, 238, 0.2);
 	}
 
 	.step-content {
@@ -412,13 +410,13 @@ if (editId) {
 	}
 
 	.breadcrumb-step:hover {
-		border-color: oklch(var(--p));
-		background-color: #f0f9ff;
+		border-color: #22d3ee;
+		background-color: #ecfeff;
 	}
 
 	.breadcrumb-step.active {
-		background-color: #e0f2fe;
-		border-color: oklch(var(--p));
+		background-color: #cffafe;
+		border-color: #22d3ee;
 		color: #000000;
 	}
 
