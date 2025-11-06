@@ -45,8 +45,8 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22042
         script: |
-          cd /var/www/tavue/server
-          npm ci
-          npm install astro
-          npm install send server-destroy
+          cd /var/www/tavue
+          npm ci --omit=dev
+          cd server
+          npm install clsx pocketbase openai
           PORT=8020 pm2 restart tavue || PORT=8020 pm2 start entry.mjs --name tavue
