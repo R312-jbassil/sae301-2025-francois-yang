@@ -48,4 +48,4 @@ jobs:
         script: |
           cd /var/www/tavue
           npm ci --omit=dev
-          PORT=8020 pm2 restart tavue || PORT=8020 pm2 start dist/server/entry.mjs --name tavue
+          PORT=8020 pm2 restart etudiant || PORT=8020 pm2 start dist/server/entry.mjs --name etudiant
