@@ -2,7 +2,12 @@ import { defineMiddleware } from "astro:middleware";
 import PocketBase from "pocketbase";
 
 export const onRequest = defineMiddleware(async (context, next) => {
-  const pb = new PocketBase(import.meta.env.POCKETBASE_URL || "http://127.0.0.1:8090");
+  // Utiliser la même logique que pb.ts
+  const pbUrl = import.meta.env.MODE === 'development' 
+    ? 'http://localhost:8090' 
+    : 'https://tavue.fryg.fr';
+  
+  const pb = new PocketBase(pbUrl);
   
   // Charger l'authentification depuis le cookie
   const authCookie = context.cookies.get("pb_auth");
