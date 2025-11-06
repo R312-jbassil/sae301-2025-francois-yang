@@ -49,4 +49,4 @@ jobs:
           npm ci
           npm install astro
           npm install send server-destroy
-          PORT=8010 pm2 restart tavue || PORT=8010 pm2 start entry.mjs --name tavue
+          PORT=8020 pm2 restart tavue || PORT=8020 pm2 start entry.mjs --name tavue
