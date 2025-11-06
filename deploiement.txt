@@ -1,0 +1,8 @@
+Url de l’application web : tavue.fryg.fr
+lien dépôt github : https://github.com/R312-jbassil/sae301-2025-francois-yang
+
+Compte admin de votre pocketbase sur le VPS
+
+lien : tavue.fryg.fr/_/
+adresse mail : hakim_mabed@gmail.com
+mdp : azerty12345
