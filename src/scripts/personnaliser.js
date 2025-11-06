@@ -44,6 +44,7 @@ function updateMontureColor(color) {
 		const paths = montureGroup.querySelectorAll('path.cls-4');
 		console.log('Nombre de paths monture trouvés:', paths.length);
 		paths.forEach(path => {
+			path.setAttribute('fill', color);
 			path.style.fill = color;
 		});
 	}
@@ -56,6 +57,7 @@ function updateBranchesColor(color) {
 		const paths = branchesGroup.querySelectorAll('path.cls-4');
 		console.log('Nombre de paths branches trouvés:', paths.length);
 		paths.forEach(path => {
+			path.setAttribute('fill', color);
 			path.style.fill = color;
 		});
 	}
@@ -107,6 +109,14 @@ function initializeSelections() {
 		const tailleCard = document.querySelector(`.taille-option[data-taille="${selections.taille}"]`);
 		if (tailleCard) {
 			tailleCard.click();
+		}
+	}
+	
+	// Pré-remplir le nom de la création
+	if (existingData?.nom_creation) {
+		const nomInput = document.getElementById('nom-creation');
+		if (nomInput) {
+			nomInput.value = existingData.nom_creation;
 		}
 	}
 }
@@ -237,10 +247,10 @@ colorOptions.forEach(option => {
 
 		// Mettre à jour les sélections
 		if (category === 'monture') {
-			selections.couleurMonture = optionValue;
+			selections.couleurMonture = target.dataset.color || '#000000';
 			updateMontureColor(target.dataset.color || '#000000');
 		} else if (category === 'branches') {
-			selections.couleurBranches = optionValue;
+			selections.couleurBranches = target.dataset.color || '#000000';
 			updateBranchesColor(target.dataset.color || '#000000');
 		}
 
@@ -384,14 +394,54 @@ if (btnSuivant) {
 		if (currentStep === totalSteps) {
 			console.log('Personnalisation complète:', selections);
 			
-			// Demander un nom pour la création (seulement si nouvelle création)
-			let nomCreation = existingData?.nom_creation || '';
-			if (!editingId) {
-				nomCreation = prompt('Donnez un nom à votre création :', 'Ma lunette personnalisée') || 'Sans nom';
+			// Récupérer le nom depuis le champ input
+			const nomInput = document.getElementById('nom-creation');
+			let nomCreation = nomInput ? nomInput.value.trim() : '';
+			
+			// Si vide, utiliser un nom par défaut
+			if (!nomCreation) {
+				nomCreation = 'Ma lunette personnalisée';
+			}
+			
+			// Si on édite une création existante, garder le nom existant
+			if (editingId && existingData?.nom_creation) {
+				nomCreation = existingData.nom_creation;
+			}
+			
+			// Capturer le SVG avec les couleurs appliquées
+			const svgPreview = document.getElementById('preview-lunettes');
+			let svgCode = '';
+			if (svgPreview) {
+				// Cloner le SVG pour ne pas modifier l'original
+				const svgClone = svgPreview.cloneNode(true);
 				
-				if (nomCreation === null) {
-					return;
+				// Supprimer les styles CSS qui définissent fill pour cls-4
+				const styleElement = svgClone.querySelector('style');
+				if (styleElement) {
+					let cssText = styleElement.textContent;
+					// Supprimer les règles qui définissent fill pour #monture et #branches
+					cssText = cssText.replace(/#monture path\.cls-4,\s*#branches path\.cls-4\s*{\s*fill:\s*#[0-9a-fA-F]{6};\s*}/g, '');
+					styleElement.textContent = cssText;
 				}
+				
+				// S'assurer que les couleurs sont bien définies dans les attributs
+				const montureGroup = svgClone.querySelector('#monture');
+				if (montureGroup && selections.couleurMonture) {
+					const paths = montureGroup.querySelectorAll('path.cls-4');
+					paths.forEach(path => {
+						path.setAttribute('fill', selections.couleurMonture);
+					});
+				}
+				
+				const branchesGroup = svgClone.querySelector('#branches');
+				if (branchesGroup && selections.couleurBranches) {
+					const paths = branchesGroup.querySelectorAll('path.cls-4');
+					paths.forEach(path => {
+						path.setAttribute('fill', selections.couleurBranches);
+					});
+				}
+				
+				svgCode = svgClone.outerHTML;
 			}
 			
 			try {
@@ -404,7 +454,7 @@ if (btnSuivant) {
 					couleur_branches: selections.couleurBranches || '',
 					taille: parseInt(selections.taille) || 0,
 					mode_creation: 'personnalisation',
-					code_svg: '',
+					code_svg: svgCode,
 				};
 
 				console.log('Données à envoyer:', data);
