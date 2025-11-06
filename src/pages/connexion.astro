@@ -21,43 +21,48 @@ import imageConnexion from "../assets/image-connexion.png";
                 <!-- Colonne droite - Formulaire -->
                 <div class="flex items-center">
                     <div class="bg-white rounded-lg shadow-lg p-8 w-full">
-                <!-- En-tête -->
-                <div class="text-center mb-8">
-                    <h1 class="text-4xl font-bold text-gray-900 mb-3">
-                        Connexion
-                    </h1>
-                    <p class="text-gray-600">
-                        Bienvenue à TaVue
-                    </p>
-                </div>
+                        <!-- En-tête -->
+                        <div class="text-center mb-8">
+                            <h1 class="text-4xl font-bold text-gray-900 mb-3">
+                                Connexion
+                            </h1>
+                            <p class="text-gray-600">
+                                Bienvenue à TaVue
+                            </p>
+                        </div>
 
-                <!-- Formulaire -->
-                <form class="space-y-5">
-                    <!-- Email -->
-                    <div class="form-control">
-                        <label class="label pb-1">
-                            <span class="label-text font-semibold text-gray-900">Email</span>
-                        </label>
-                        <input
-                            type="email"
-                            placeholder="vous@exemple.com"
-                            class="input w-full bg-white border-gray-300 placeholder:text-gray-400 text-black"
-                            required
-                        />
-                    </div>
+                        <!-- Message d'erreur/succès -->
+                        <div id="message" class="hidden mb-4 p-4 rounded-lg"></div>
 
-                    <!-- Mot de passe -->
-                    <div class="form-control">
-                        <label class="label pb-1">
-                            <span class="label-text font-semibold text-gray-900">Mot de passe</span>
-                        </label>
-                        <input
-                            type="password"
-                            placeholder="••••••••"
-                            class="input w-full bg-white border-gray-300 placeholder:text-gray-400 text-black"
-                            required
-                        />
-                    </div>
+                        <!-- Formulaire -->
+                        <form id="connexion-form" class="space-y-5">
+                            <!-- Email -->
+                            <div class="form-control">
+                                <label class="label pb-1">
+                                    <span class="label-text font-semibold text-gray-900">Email</span>
+                                </label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    placeholder="vous@exemple.com"
+                                    class="input w-full bg-white border-gray-300 placeholder:text-gray-400 text-black"
+                                    required
+                                />
+                            </div>
+
+                            <!-- Mot de passe -->
+                            <div class="form-control">
+                                <label class="label pb-1">
+                                    <span class="label-text font-semibold text-gray-900">Mot de passe</span>
+                                </label>
+                                <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="••••••••"
+                                    class="input w-full bg-white border-gray-300 placeholder:text-gray-400 text-black"
+                                    required
+                                />
+                            </div>
 
                     <!-- Se souvenir de moi et Mot de passe oublié -->
                     <div class="flex items-center justify-between text-sm pt-2">
@@ -111,52 +116,63 @@ import imageConnexion from "../assets/image-connexion.png";
     </div>
 </Layout>
 
+<style>
+    /* Checkbox avec icône noire quand cochée */
+    .checkbox:checked {
+        background-color: #000000;
+        border-color: #000000;
+    }
+</style>
+
 <script>
-    // Gestion de la soumission du formulaire
-    const form = document.querySelector("form");
+    import pb from '../utils/pb.js';
+
+    const form = document.getElementById('connexion-form') as HTMLFormElement;
+    const messageDiv = document.getElementById('message') as HTMLDivElement;
+
+    function showMessage(message: string, isError: boolean = false) {
+        messageDiv.textContent = message;
+        messageDiv.className = `mb-4 p-4 rounded-lg ${isError ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'}`;
+        messageDiv.classList.remove('hidden');
+    }
+
+    function hideMessage() {
+        messageDiv.classList.add('hidden');
+    }
 
     if (form) {
-        form.addEventListener("submit", async (e) => {
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
+            hideMessage();
 
-            const email = (
-                form.querySelector('input[type="email"]') as HTMLInputElement
-            )?.value;
-            const password = (
-                form.querySelector('input[type="password"]') as HTMLInputElement
-            )?.value;
+            const email = (document.getElementById('email') as HTMLInputElement).value;
+            const password = (document.getElementById('password') as HTMLInputElement).value;
 
             try {
-                console.log("🔄 Tentative de connexion...");
+                // Authentifier avec PocketBase
+                const authData = await pb.collection('users').authWithPassword(email, password);
                 
-                // Appel à l'API de connexion
-                const response = await fetch("/api/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ email, password }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.user) {
-                    console.log("✅ Connexion réussie!");
-                    
-                    // Stocker dans localStorage pour le Header
-                    localStorage.setItem('pocketbase_auth', JSON.stringify({
-                        record: data.user
-                    }));
-                    
-                    // Redirection vers la page de personnalisation
-                    window.location.href = "/personnaliser";
+                console.log('Connexion réussie:', authData);
+                
+                // Stocker dans localStorage
+                localStorage.setItem('pocketbase_auth', JSON.stringify({
+                    token: authData.token,
+                    record: authData.record
+                }));
+                
+                showMessage('✅ Connexion réussie ! Redirection...', false);
+                
+                // Rediriger vers la page de personnalisation
+                setTimeout(() => {
+                    window.location.href = '/personnaliser';
+                }, 1500);
+            } catch (error: any) {
+                console.error('Erreur de connexion:', error);
+                if (error.status === 400) {
+                    showMessage('Email ou mot de passe incorrect', true);
                 } else {
-                    console.error("❌ Erreur:", data.error);
-                    alert(data.error || "Email ou mot de passe incorrect");
+                    showMessage('Erreur de connexion. Assurez-vous que PocketBase est démarré.', true);
                 }
-            } catch (error) {
-                console.error("❌ Erreur de connexion:", error);
-                alert("Erreur de connexion. Vérifiez que PocketBase est démarré.");
             }
         });
     }
